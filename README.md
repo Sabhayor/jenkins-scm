@@ -46,6 +46,25 @@ Here’s how we’ll do it:
 
 3. On GitHub, create a **Webhook** and point it to your Jenkins server’s IP address (and port).
 
+On GitHub: Repo → Settings → Webhooks → Add webhook.
+
+a. Payload URL:
+https://<your-jenkins>/github-webhook/
+
+b. Content type: application/json
+
+c. Secret: set a strong token.
+
+In Jenkins: Manage Jenkins → Configure System → GitHub → add a GitHub Server entry; put the same secret under Shared secret (or use “Manage hooks” if configured).
+
+d. Events: choose “Send me everything” or at least Push (and Pull request if you want PR builds).
+
+![github_webhook](./images/github_webhook.png)
+
+e. Click Add webhook, then use Recent Deliveries → Redeliver to test. You should see 200 from Jenkins, and the job should trigger.
+
+![webhook_delivery](./images/webhook_delivery.png)
+
 ---
 
 Now, let’s test it out:
