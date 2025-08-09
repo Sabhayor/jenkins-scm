@@ -9,7 +9,7 @@ pipeline {
                     extensions: [],
                     userRemoteConfigs: [[
                         url: 'https://github.com/Sabhayor/jenkins-scm.git'
-                        credentialsId: '9485c452-eb2d-4f3d-b976-57e41f6f7ec4'
+                        credentialsId: 'my-github-PAT'
                     ]]
                 )
             }
