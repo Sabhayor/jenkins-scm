@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Connect to GitHub') {
+            steps {
+                checkout scmGit(
+                    branches: [[name: '*/main']],
+                    extensions: [],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/Sabhayor/jenkins-scm.git'
+                        credentialsId: '9485c452-eb2d-4f3d-b976-57e41f6f7ec4'
+                    ]]
+                )
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t dockerfile .'
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    sh 'docker run -itd -p 8081:80 dockerfile'
+                }
+            }
+        }
+        post {
+            success {
+                // Notify on success
+                echo 'Pipeline succeeded!'
+            }
+            failure {
+                //Notify on failure
+                echo 'Pipline failed!'
+            }
+        }
+    }
+}
